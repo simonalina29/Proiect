@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.6.5.2
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1
+- Generation Time: Mar 21, 2017 at 08:53 AM
+- Server version: 10.1.21-MariaDB
+- PHP Version: 7.1.1
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="humanr" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="levels">
+                CREATE TABLE `levels` (
+                  `id` tinyint(4) NOT NULL,
+                  `name` varchar(10) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="logs">
+                CREATE TABLE `logs` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `date_in` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                  `date_out` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `tabel` int(11) NOT NULL,
+                  `view` int(11) NOT NULL,
+                  `id_user` int(11) NOT NULL,
+                  `form` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_user` (`id_user`),
+                  CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `useri` (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="rules">
+                CREATE TABLE `rules` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_level` tinyint(11) NOT NULL,
+                  `view_form` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_level` (`id_level`),
+                  CONSTRAINT `rules_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `levels` (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="useri">
+                CREATE TABLE `useri` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `username` varchar(30) NOT NULL,
+                  `pass` varchar(30) NOT NULL,
+                  `name` varchar(50) NOT NULL,
+                  `id_level` tinyint(4) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_level` (`id_level`),
+                  CONSTRAINT `useri_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `levels` (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'humanr'
+    -->
+    <database name="humanr">
+        <!-- Table levels -->
+        <!-- Table logs -->
+        <!-- Table rules -->
+        <!-- Table useri -->
+    </database>
+</pma_xml_export>
